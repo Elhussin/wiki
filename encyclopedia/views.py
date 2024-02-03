@@ -87,15 +87,11 @@ def edit_pages(request, entery):
         redirect = reverse("wiki", kwargs={"entery": title})
         return HttpResponseRedirect(redirect)
     else:
-        return render(
-            request, "encyclopedia/edit.html", {"title": entery, "entery": edit_data}
-        )
+        return render(  request, "encyclopedia/edit.html", {"title": entery, "entery": edit_data} )
 
 
 def randomq(request):
     topic_lest = util.list_entries()
     value = randint(0, len(topic_lest) - 1)
     
-    return HttpResponseRedirect(
-        reverse("wiki", kwargs={"entery": topic_lest[value]})
-    )
+    return HttpResponseRedirect(   reverse("wiki", kwargs={"entery": topic_lest[value]}) )
