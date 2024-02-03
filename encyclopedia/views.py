@@ -21,8 +21,7 @@ def enterys(request, entery):
             "encyclopedia/entery.html",
             {
                 "entery": html,
-                "title": entery,
-            },  )
+                "title": entery,  },  )
     else:
         return render(
             request, "encyclopedia/error.html", {"error": "  ‘Oops, page not found!’."} )
@@ -68,14 +67,9 @@ def new_pages(request):
             )
         else:
             util.save_entry(title, topic)
-            return render(
-                request, "encyclopedia/newpage.html", {"message": "Add secusses"}
-            )
+            return render(  request, "encyclopedia/newpage.html", {"message": "Add secusses"}   )
     else:
-        return render(
-            request,
-            "encyclopedia/newpage.html",
-        )
+        return render(  request,  "encyclopedia/newpage.html", )
 
 
 def edit_pages(request, entery):

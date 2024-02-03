@@ -5,13 +5,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Pages</h1>
 
-    <ul>
+    <h1>All Pages</h1>
+{% comment %}  view list of entries  {% endcomment %}
+        <ul class="list-group list-group-flush w-75">
         {% for entry in entries %}
-            <li><a href="wiki/{{entry}} ">{{ entry }}</a></li>
+        <div>
+            <li  class="list-group-item" ><a href="{% url 'wiki' entry %}">{{ entry }}</a></li>
+       <div>
         {% endfor %}
     </ul>
-   
+  {% comment %} end of list view {% endcomment %}
 
 {% endblock %}

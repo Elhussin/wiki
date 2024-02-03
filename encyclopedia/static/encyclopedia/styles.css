@@ -15,6 +15,7 @@ h1 {
 textarea {
     height: 90vh;
     width: 80%;
+
 }
 
 .main {
@@ -40,17 +41,11 @@ textarea {
 
 
 
-@media only screen and (max-width: 768px) {
-    body{
-        max-width: 97%;
-    }
+@media  screen and (max-width: 768px) {
 
     .sidebar{
         height: 50vh;
     
     }
-    .main {
-        margin: 10px;
-   
-    }
+
   }
