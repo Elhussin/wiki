@@ -8,98 +8,97 @@ from markdown2 import Markdown
 
 
 def index(request):
+    # index page will return a list of all entries title
     return render(request, "encyclopedia/index.html", {"entries": util.list_entries()})
 
 
 def enterys(request, entery):
+    # get file from entries 
     entery_data = util.get_entry(entery)
-
+  
     markdowner = Markdown()
-    if entery_data:
+    #  view not null file 
+    if entery_data and entery:
+        # transfer MD file to Html element
         html = markdowner.convert(entery_data)
-        return render(
-            request,
-            "encyclopedia/entery.html",
-            {
-                "entery": html,
-                "title": entery,
-            },
-        )
+        return render(  request, "encyclopedia/entery.html",     {  "entery": html,"title": entery, },  )
+    #  if  null file 
+    elif entery :
+         null =f"{entery} <p>This page is null you can add more details <p>"
+         return render(  request, "encyclopedia/entery.html",     {  "entery": null,"title": entery, },  )
     else:
-        return render(
-            request, "encyclopedia/error.html", {"error": "  ‘Oops, page not found!’."}
-        )
+        #    redirect to error page if not find  any file 
+        return render(      request, "encyclopedia/error.html", {"error": "  ‘Oops, page not found!’."}  )
 
 
 def serarchs(request):
     if request.method == "POST":
         q = request.POST["q"]
         if q:
+            # select all entries 
             topic_lest = util.list_entries()
-            q.lower()
+            #  search in the list then find if any result like search entry and return a list from results
             list_iteam = [i for i in topic_lest if q.lower() in i.lower()]
-
+            # if no result 
             if len(list_iteam) == 0:
-                return render(
-                    request, "encyclopedia/error.html", {"error": "No such topic."}
-                )
+                return render(        request, "encyclopedia/error.html", {"error": "No such topic."}     )
+            # if one result same search entry
             elif len(list_iteam) == 1 and list_iteam[0].lower() == q.lower():
-
-                return HttpResponseRedirect(
-                    reverse("wiki", kwargs={"entery": list_iteam[0]})
-                )
+                return HttpResponseRedirect(       reverse("wiki", kwargs={"entery": list_iteam[0]})    )
 
             else:
-                return render(
-                    request, "encyclopedia/search.html", {"entries": list_iteam}
-                )
+                # if muny result
+                return render( request, "encyclopedia/search.html", {"entries": list_iteam}  )
         else:
-            return render(
-                request, "encyclopedia/error.html", {"error": " Your search was unsuccessful."}
-            )
+            # if null search from post
+            return render(     request, "encyclopedia/error.html", {"error": " Your search was unsuccessful."}  )
     else:
+        #  if null search from git 
         return render(request, "encyclopedia/error.html", {"error": " Your search was unsuccessful."})
 
 
 def new_pages(request):
-    topic_lest = util.list_entries()
+    # add new entery
     if request.method == "POST":
         title = request.POST["title"]
         topic = request.POST["topic"]
-        if title in topic_lest:
-            return render(
-                request,
-                "encyclopedia/newpage.html",
-                {"message": " This topic already add ."},
-            )
+        #   confirm title and topic
+        if not title or  not topic :
+            return render(    request,  "encyclopedia/newpage.html", {"error": "Title and  Subject are required ."},  )
+       
+        # confirm this title not duplicate
+        if title in util.list_entries() :
+            return render(     request,    "encyclopedia/newpage.html",    {"error": " This topic already add ."},    )
+        #  if title not used before add new entry
         else:
             util.save_entry(title, topic)
-            return render(
-                request, "encyclopedia/newpage.html", {"message": "Add secusses"}
-            )
+            return render(  request, "encyclopedia/newpage.html", {"message": "Add secusses"}   )
     else:
-        return render(
-            request,
-            "encyclopedia/newpage.html",
-        )
+        return render(     request,     "encyclopedia/newpage.html",    )
 
 
 def edit_pages(request, entery):
+    # get topic from entry  topics 
     edit_data = util.get_entry(entery)
+    
     if request.method == "POST":
+        # confirm title and topic
         title = request.POST["title"]
         topic = request.POST["topic"]
+        if not title or  not topic :
+            return render( request,  "encyclopedia/edit.html", {"error": "Title and  Subject are required ." ,"title": entery, "entery": edit_data},  )
+        #  Update file  
         util.save_entry(title, topic)
-        redirect = reverse("wiki", kwargs={"entery": title})
-        return HttpResponseRedirect(redirect)
+        # redirect to entery page 
+        return HttpResponseRedirect(reverse("wiki", kwargs={"entery": title}))
     else:
-        return render(
-            request, "encyclopedia/edit.html", {"title": entery, "entery": edit_data}
-        )
+        return render(   request, "encyclopedia/edit.html", {"title": entery, "entery": edit_data}  )
 
-
+# random function will return one index  from of all entries
 def randomq(request):
     topic_lest = util.list_entries()
     value = randint(0, len(topic_lest) - 1)
-
-    return HttpResponseRedirect(reverse("wiki", kwargs={"entery": topic_lest[value]}))
+    if value :
+          return HttpResponseRedirect(reverse("wiki", kwargs={"entery": topic_lest[value]}))
+# if not get correct value return to index
+    return render(   request, "encyclopedia/error.html", {"error":"‘Oops, page not found!’." }  )

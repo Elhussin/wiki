@@ -9,7 +9,11 @@ New
 {% if message %}
 <div class="alert alert-info">
     {{ message}}
-
+</div>
+{% endif %}
+{% if error %}
+<div class="alert alert-warning">
+    {{ error}}
 </div>
 {% endif %}
 <h1>Add New </h1>
