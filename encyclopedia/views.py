@@ -39,11 +39,13 @@ def serarchs(request):
                 return render(
                     request, "encyclopedia/error.html", {"error": " No such topic."}
                 )
-
-            elif len(list_iteam) == 1:
-                return HttpResponseRedirect(
-                    reverse("wiki", kwargs={"entery": list_iteam[0]})
-                )
+            elif len(list_iteam) == 1 and list_iteam[0].lower() == q :
+                # print(list_iteam[0],q)
+                # if  list_iteam[0] == q:
+                    return HttpResponseRedirect(   reverse("wiki", kwargs={"entery": list_iteam[0]}) )
+                # else:
+                #     request, "encyclopedia/index.html", {"entries": list_iteam}
+                    
             else:
                 return render(
                     request, "encyclopedia/index.html", {"entries": list_iteam}

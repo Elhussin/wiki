@@ -6,11 +6,12 @@
 {% endblock %}
 
 {% block body %}
-
+{% comment %} erorr masseg view  {% endcomment %}
 <div class="alert alert-danger">
-{{error}}
+   {{error}}
 <a href="{% url 'index'%}">Home</a>
 <div>
+    {% comment %} end error view  {% endcomment %}
 {% endblock %}
 
 
