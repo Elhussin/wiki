@@ -36,3 +36,21 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+
+
+
+@media only screen and (max-width: 768px) {
+    body{
+        max-width: 97%;
+    }
+
+    .sidebar{
+        height: 50vh;
+    
+    }
+    .main {
+        margin: 10px;
+   
+    }
+  }
