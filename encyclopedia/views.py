@@ -6,25 +6,29 @@ from random import randint
 from . import util
 from markdown2 import Markdown
 
+
 def index(request):
     return render(request, "encyclopedia/index.html", {"entries": util.list_entries()})
 
 
 def enterys(request, entery):
     entery_data = util.get_entry(entery)
-    
+
     markdowner = Markdown()
-    if entery_data :
-        html =  markdowner.convert(entery_data)
+    if entery_data:
+        html = markdowner.convert(entery_data)
         return render(
             request,
             "encyclopedia/entery.html",
             {
                 "entery": html,
-                "title": entery,  },  )
+                "title": entery,
+            },
+        )
     else:
         return render(
-            request, "encyclopedia/error.html", {"error": "  ‘Oops, page not found!’."} )
+            request, "encyclopedia/error.html", {"error": "  ‘Oops, page not found!’."}
+        )
 
 
 def serarchs(request):
@@ -37,23 +41,24 @@ def serarchs(request):
 
             if len(list_iteam) == 0:
                 return render(
-                    request, "encyclopedia/error.html", {"error": " No such topic."}
+                    request, "encyclopedia/error.html", {"error": "No such topic."}
                 )
-            elif len(list_iteam) == 1 and list_iteam[0].lower() == q :
-                # print(list_iteam[0],q)
-                # if  list_iteam[0] == q:
-                    return HttpResponseRedirect(   reverse("wiki", kwargs={"entery": list_iteam[0]}) )
-                # else:
-                #     request, "encyclopedia/index.html", {"entries": list_iteam}
-                    
+            elif len(list_iteam) == 1 and list_iteam[0].lower() == q.lower():
+
+                return HttpResponseRedirect(
+                    reverse("wiki", kwargs={"entery": list_iteam[0]})
+                )
+
             else:
                 return render(
-                    request, "encyclopedia/index.html", {"entries": list_iteam}
+                    request, "encyclopedia/search.html", {"entries": list_iteam}
                 )
         else:
-            return render(request, "encyclopedia/error.html", {"error": " No such topic."})
+            return render(
+                request, "encyclopedia/error.html", {"error": " Your search was unsuccessful."}
+            )
     else:
-        return render(request, "encyclopedia/error.html", {"error": " No such topic."})
+        return render(request, "encyclopedia/error.html", {"error": " Your search was unsuccessful."})
 
 
 def new_pages(request):
@@ -69,9 +74,14 @@ def new_pages(request):
             )
         else:
             util.save_entry(title, topic)
-            return render(  request, "encyclopedia/newpage.html", {"message": "Add secusses"}   )
+            return render(
+                request, "encyclopedia/newpage.html", {"message": "Add secusses"}
+            )
     else:
-        return render(  request,  "encyclopedia/newpage.html", )
+        return render(
+            request,
+            "encyclopedia/newpage.html",
+        )
 
 
 def edit_pages(request, entery):
@@ -83,11 +93,13 @@ def edit_pages(request, entery):
         redirect = reverse("wiki", kwargs={"entery": title})
         return HttpResponseRedirect(redirect)
     else:
-        return render(  request, "encyclopedia/edit.html", {"title": entery, "entery": edit_data} )
+        return render(
+            request, "encyclopedia/edit.html", {"title": entery, "entery": edit_data}
+        )
 
 
 def randomq(request):
     topic_lest = util.list_entries()
     value = randint(0, len(topic_lest) - 1)
-    
-    return HttpResponseRedirect(   reverse("wiki", kwargs={"entery": topic_lest[value]}) )
+
+    return HttpResponseRedirect(reverse("wiki", kwargs={"entery": topic_lest[value]}))
