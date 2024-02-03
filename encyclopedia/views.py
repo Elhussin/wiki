@@ -25,7 +25,7 @@ def enterys(request, entery):
             },  )
     else:
         return render(
-            request, "encyclopedia/error.html", {"error": " Requested page  not found."} )
+            request, "encyclopedia/error.html", {"error": "  ‘Oops, page not found!’."} )
 
 
 def serarchs(request):
