@@ -23,7 +23,7 @@ def enterys(request, entery):
         html = markdowner.convert(entery_data)
         return render(  request, "encyclopedia/entery.html",     {  "entery": html,"title": entery, },  )
     #  if  null file 
-    elif entery :
+    elif entery and   entery in  util.list_entries() :
          null =f"{entery} <p>This page is null you can add more details <p>"
          return render(  request, "encyclopedia/entery.html",     {  "entery": null,"title": entery, },  )
     else:
@@ -65,14 +65,20 @@ def new_pages(request):
         #   confirm title and topic
         if not title or  not topic :
             return render(    request,  "encyclopedia/newpage.html", {"error": "Title and  Subject are required ."},  )
-       
+
         # confirm this title not duplicate
-        if title in util.list_entries() :
+        print(title.title())
+        print( util.list_entries())
+        print(  title.lower())
+        if  title.title() in  util.list_entries():
             return render(     request,    "encyclopedia/newpage.html",    {"error": " This topic already add ."},    )
-        #  if title not used before add new entry
         else:
+            title=title.title()
             util.save_entry(title, topic)
-            return render(  request, "encyclopedia/newpage.html", {"message": "Add secusses"}   )
+            message=f'{title} : Add secusses <a href="/wiki/{title}"> view</a>'
+            return render(  request, "encyclopedia/newpage.html", {"message": message}   )
+            
+
     else:
         return render(     request,     "encyclopedia/newpage.html",    )
 

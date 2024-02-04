@@ -8,7 +8,7 @@ New
 {% block body %}
 {% if message %}
 <div class="alert alert-info">
-    {{ message}}
+    {{ message|safe|escape }}
 </div>
 {% endif %}
 {% if error %}
@@ -28,7 +28,7 @@ New
     </div>
     <div class="mb-3">
       <label for="topic" class="form-label">Subject</label>
-      <textarea class="form-control"  name="topic" id="" cols="5" rows="10"></textarea>
+      <textarea class="form-control"  name="topic" id="" cols="5" rows="15"></textarea>
     </div>
   
     <div class="mb-3">
