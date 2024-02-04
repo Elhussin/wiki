@@ -104,7 +104,4 @@ def edit_pages(request, entery):
 def randomq(request):
     topic_lest = util.list_entries()
     value = randint(0, len(topic_lest) - 1)
-    if value :
-          return HttpResponseRedirect(reverse("wiki", kwargs={"entery": topic_lest[value]}))
-# if not get correct value return to index
-    return render(   request, "encyclopedia/error.html", {"error":"‘Oops, page not found!’." }  )
+    return HttpResponseRedirect(reverse("wiki", kwargs={"entery": topic_lest[value]}))
