@@ -1,0 +1,43 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+New
+{% endblock %}
+
+
+{% block body %}
+{% if message %}
+<div class="alert alert-info">
+    {{ message|safe|escape }}
+</div>
+{% endif %}
+{% if error %}
+<div class="alert alert-warning">
+    {{ error}}
+</div>
+{% endif %}
+<h1>Add New </h1>
+
+
+<div class=" form-control-sm mw-100 m-auto">
+    <form  action="{% url 'new'%}" method="POST">
+        {% csrf_token %}
+    <div class=" mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text"  class="form-control" name="title" placeholder="Title">
+    </div>
+    <div class="mb-3">
+      <label for="topic" class="form-label">Subject</label>
+      <textarea class="form-control"  name="topic" id="" cols="5" rows="15"></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Add </button>
+  
+    </div>
+</form>
+  </div>
+
+
+
+{% endblock %}

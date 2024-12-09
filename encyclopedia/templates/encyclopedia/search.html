@@ -1,0 +1,21 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block nav %}
+
+    <h5 class="mt-5">Search resulat</h5>
+
+{% comment %}  view  search resuaalt   {% endcomment %}
+        <ul class="list-group list-group-flush ">
+        {% for entry in entries %}
+        <div>
+            <li  class="list-group-item" ><a href="{% url 'wiki' entry %}">{{ entry|title }}</a></li>
+       <div>
+        {% endfor %}
+    </ul>
+  {% comment %} end of list view {% endcomment %}
+
+{% endblock %}

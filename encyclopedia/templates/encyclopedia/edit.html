@@ -1,0 +1,37 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Edit :{{title}}
+{% endblock %}
+
+{% block body %}
+{% if error %}
+<div class="alert alert-warning">
+    {{ error}}
+</div>
+{% endif %}
+<h1>Edit  Page </h1>
+
+<h3 class="mt-5">{{title}}</h3>
+{% comment %} edit topi  form{% endcomment %}
+<div class=" form-control-sm mw-100 m-auto">
+    <form  action="{% url 'edit' title %}" method="POST">
+        {% csrf_token %}
+    <div class=" mb-3">
+        <input type="text" name="title" placeholder="Title" value="{{title}}" hidden>
+    </div>
+    <div class="mb-3">
+      <label for="topic" class="form-label">Subject</label>
+   {% comment %} text area  with topic value  {% endcomment %}
+      <textarea class="form-control"  name="topic" id="" cols="5" rows="15" >{{entery}}</textarea>
+    </div>
+  
+    <div class="mb-3">
+      <button type="submit " class="btn btn-primary">Update </button>
+  
+    </div>
+</form>
+  </div>
+  {% comment %} end of form  {% endcomment %}
+
+{% endblock %}

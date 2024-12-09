@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href=" {% static 'encyclopedia/wiki.jpeg' %}" type="image/x-icon">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+                 {% comment %}  layout page  {% endcomment %}
+        <div class="row mw-100 m-auto">
+            <div class="sidebar col-lg-2 col-md-3">
+                <h2>Wiki</h2>
+                 {% comment %} left sectian {% endcomment %}
+                 {% comment %} search box {% endcomment %}
+                <form method="post" action="{% url 'serarch' %}" >
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="text" class=" search form-control"  name="q"  placeholder="Search Encyclopedia" >
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                              </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                 {% comment %} end search box {% endcomment %}
+                
+              
+                 {% comment %} url sectian  {% endcomment %}
+              <div>
+                    <a href="{% url 'index' %}">Home</a>
+                </div>
+                <div>
+                    <a href="{% url 'new' %}">   Create New Page  </a>
+                </div>
+                <div>
+                    <a href="{% url 'randomq' %}">   Random Page  </a>
+                </div>
+                {% comment %} end url sectian  {% endcomment %}
+
+                {% comment %} search rusalt will add here  {% endcomment %}
+                {% block nav %}
+                {% endblock %}
+            </div>
+            {% comment %} main  {% endcomment %}
+            <div class="main col-lg-10 col-md-9">
+                <div id="resulat">
+                {% block body %}
+                {% endblock %}
+            </div>
+            </div>
+            {% comment %} end of main  {% endcomment %}
+        </div>
+
+         </div>
+
+{% comment %} end  {% endcomment %}
+   
+    </body>
+</html>
+

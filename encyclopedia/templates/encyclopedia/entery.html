@@ -1,0 +1,21 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+
+<div class="mt-5 ">
+{% comment %} view iteam  {% endcomment %}
+
+    {{ entery|safe|escape }}
+
+</div>
+    {% comment %} edit link {% endcomment %}
+<div>
+<a class="btn btn-outline-info" href="{% url 'edit' title %}">Edit</a>
+<div>
+
+
+{% endblock %}
